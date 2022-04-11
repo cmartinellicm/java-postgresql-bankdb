@@ -11,7 +11,5 @@ public interface UsuarioService {
     UsuarioResponse create(UsuarioRequest usuarioRequest);
     Usuario getById(Integer id);
     Usuario update(UsuarioRequest usuarioRequest, Integer id);
-
-
     void delete(Integer id);
 }

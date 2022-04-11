@@ -1,5 +1,6 @@
 package com.santander.banco811.model;
 
+import com.santander.banco811.dto.ContaRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,4 +47,12 @@ public class Conta {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
+
+    public Conta (ContaRequest contaRequest) {
+        this.numero = contaRequest.getNumero();
+        this.agencia = contaRequest.getAgencia();
+        this.saldo = contaRequest.getSaldo();
+        this.tipoConta = contaRequest.getTipoConta();
+        this.usuario = contaRequest.getUsuario();
+    }
 }

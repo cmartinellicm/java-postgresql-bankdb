@@ -13,11 +13,18 @@ import java.util.List;
 
 @Repository
 public interface ContaRepository extends JpaRepository<Conta, Integer> {
+    List<Conta> findByNumero(Integer numero);
+    Conta findByNumeroAndAgencia(Integer numero, Integer agencia);
+
     List<Conta> findBySaldoLessThan(BigDecimal saldo);
     List<Conta> findBySaldoLessThanEqual(BigDecimal saldo);
     List<Conta> findBySaldoGreaterThan(BigDecimal saldo);
+    List<Conta> findBySaldoGreaterThanEqual(BigDecimal saldo);
+
     List<Conta> findBySaldoBetween(BigDecimal saldoInicial, BigDecimal saldoFinal);
     List<Conta> findBySaldoIn(List<BigDecimal> saldos);
+
+    List<Conta> findByTipoContaAndSaldoBetweenOrderBySaldo(TipoConta tipoConta, BigDecimal saldoInicial, BigDecimal saldoFinal);
 
     List<Conta> findByUsuario_cpf(String cpf);
 
@@ -26,19 +33,19 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
     @Query("select c from Conta c " +
             "where (c.tipoConta = :tipoConta and c.usuario.cpf = :cpf) " +
             "or (c.tipoConta = :tipoConta or c.saldo = :saldo)")
-    List<Conta> findByTipoContaAndAgenciaOrTipoContaAndSaldo(
+    List<Conta> findByTipoContaAndCpfOrTipoContaAndSaldo(
             @Param("tipoConta") TipoConta tipoConta,
             @Param("cpf") String cpf,
             @Param("saldo") BigDecimal saldo
     );
 
-//    @Query(value = "select * from Conta c " +
-//            "where (c.tipo_conta = :tipoConta AND " +
-//            "c.data_criacao >= :dataCriaca) " +
-//            "OR c.saldo = :saldo", nativeQuery = true)
-//    List<Conta> findByDataCriacaoAndTipoContaOrSaldo(
-//            @Param("dataCriacao") LocalDateTime dataCriacao,
-//            @Param("tipoConta") LocalDateTime tipoConta,
-//            @Param("saldo") BigDecimal saldo
-//            );
+    @Query(value = "select * from conta c" +
+            "where (c.tipo_conta = :tipoConta AND" +
+            "c.data_criacao >= :dataCriacao)" +
+            "OR c.saldo = :saldo ", nativeQuery = true)
+    List<Conta> findByDataCriacaoAndTipoContaOrSaldo(
+            @Param("dataCriacao") LocalDateTime dataCriacao,
+            @Param("tipoConta") LocalDateTime tipoConta,
+            @Param("saldo") BigDecimal saldo
+    );
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     List<Usuario> findByNome(String nome);
+
     List<Usuario> findByNomeAndCpf(String nome, String cpf);
 
     List<Usuario> findByNomeIs(String nome);
@@ -24,7 +25,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     List<Usuario> findByNomeLike(String pattern);
 
-    List<Usuario> findByDataCriacaoAfterAndNome(LocalDateTime dataCriacao, String nome);
+    List<Usuario> findByDataCriacaoBeforeAndNomeAndCpf(LocalDateTime dataCriacao, String nome, String cpf);
     List<Usuario> findByDataCriacao(LocalDateTime dataCriacao);
 
     List<Usuario> findByNomeAndDataCriacaoOrderByNomeAsc(String nome, LocalDateTime dataCriacao);
